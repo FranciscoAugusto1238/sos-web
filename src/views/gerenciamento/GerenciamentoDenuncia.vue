@@ -4,11 +4,9 @@
             <v-icon left color="teal">mdi-clipboard-list</v-icon>
             Gerenciamentos
         </v-card-title>
-
         <v-alert v-if="gerenciamentos.length === 0" type="info" border="left" colored-border>
             Nenhum gerenciamento encontrado.
         </v-alert>
-
         <v-list two-line>
             <v-list-item v-for="gerenciamento in gerenciamentos" :key="gerenciamento.id"
                 @click="abrirDialog(gerenciamento)" class="cursor-pointer">
@@ -22,8 +20,6 @@
                 </v-list-item-icon>
             </v-list-item>
         </v-list>
-
-        <!-- Dialog para edição e visualização -->
         <v-dialog v-model="dialog" max-width="600px">
             <v-card>
                 <v-card-title>
@@ -314,7 +310,7 @@ export default {
 
             gerenciamentoService.atualizar(this.gerenciamentoSelecionado.id, atualizado)
                 .then(() => {
-                    this.$toast.success('Status atualizado com sucesso');
+                    this.carregarGerenciamentos();
                     this.fecharDialog();
                 })
                 .catch(() => {

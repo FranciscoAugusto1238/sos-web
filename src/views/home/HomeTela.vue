@@ -4,7 +4,7 @@
       <v-app-bar-nav-icon @click="drawer = !drawer">
         <v-icon>mdi-menu</v-icon>
       </v-app-bar-nav-icon>
-      <v-toolbar-title class="font-weight-bold"> <img :src="logo" alt="Logo do EventIF" class="logo-img-app-bar" />
+      <v-toolbar-title class="font-weight-bold"> <img :src="logo" alt="Logo do SOS" class="logo-img-app-bar" />
       </v-toolbar-title>
       <span class="ml-2">SOS Meio Ambiente</span>
       <v-spacer></v-spacer>
@@ -15,7 +15,7 @@
 
     <v-navigation-drawer v-model="drawer" app temporary color="teal darken-1">
       <v-toolbar-title class="d-flex align-center">
-        <img :src="logo" alt="Logo do EventIF" class="logo-img" />
+        <img :src="logo" alt="Logo do SOS" class="logo-img" />
         SOS Meio Ambiente
       </v-toolbar-title>
       <div v-if="usuarioLogado" class="px-4 py-2 white--text text-subtitle-2">

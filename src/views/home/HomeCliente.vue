@@ -1,7 +1,5 @@
 <template>
   <v-container fluid class="no-space">
-
-    <!-- Hero banner -->
     <v-parallax
       src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1470&q=80"
       height="800"
@@ -30,8 +28,6 @@
         </v-col>
       </v-row>
     </v-parallax>
-
-    <!-- Por que denunciar? -->
     <v-container class="my-16">
       <h2 class="text-center font-weight-bold mb-12 teal--text text--darken-3">
         Por que denunciar descarte ilegal?
@@ -56,8 +52,6 @@
         </v-col>
       </v-row>
     </v-container>
-
-    <!-- Como funciona -->
     <v-container class="my-16 pa-12 teal lighten-5 rounded-lg">
       <h2 class="text-center font-weight-bold mb-10 teal--text text--darken-4">
         Como funciona o sistema SOS Meio Ambiente
@@ -92,8 +86,6 @@
         </v-btn>
       </v-row>
     </v-container>
-
-    <!-- Imagem / Mapa ilustrativo -->
     <v-container class="my-16" style="max-width: 1000px; margin: auto;">
       <v-img
         src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1470&q=80"
@@ -102,8 +94,6 @@
         class="rounded-lg elevation-5"
       ></v-img>
     </v-container>
-
-    <!-- Footer social -->
     <v-footer color="teal darken-3" dark app>
       <v-container>
         <v-row justify="space-between" align="center">
@@ -132,8 +122,8 @@ export default {
   methods: {
     abrirRedeSocial(rede) {
       const urls = {
-        facebook: "https://www.facebook.com/people/Ronaldo-Piscinas-RN/61576370217048/",
-        instagram: "https://www.instagram.com/ronaldopiscinas2025?igsh=cXZ4dWFjaHc0YXJw",
+        facebook: "",
+        instagram: "",
         whatsapp:
           "https://wa.me/37998750927?text=Olá!%20Gostaria%20de%20mais%20informações%20sobre%20os%20serviços%20da%20SOS%20Meio%20Ambiente.",
       };

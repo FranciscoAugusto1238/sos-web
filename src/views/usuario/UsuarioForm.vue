@@ -1,11 +1,14 @@
 <template>
   <div class="form-wrapper">
     <v-container class="d-flex align-center justify-center fill-height pa-0 ma-0" fluid>
-      <v-card class="form-card elevation-12">
-        <v-card-title class="justify-center">
-          <v-img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" max-height="60" max-width="60"
-            class="mb-2 logo" contain />
-        </v-card-title>
+      <v-card class="form-card elevation-12" style="background-color: #C8E6C9; padding: 16px;">
+        <v-card-title class="d-flex justify-center align-center">
+          <img :src="logo" alt="Logo do SOS" class="logo-img"
+            style="max-height: 60px; max-width: 60px; margin-bottom: 8px;" />
+          <div class="toolbar-logo-title">
+            <span class="text-h5 font-weight-bold white--text">SOS Meio Ambiente</span> 
+          </div>
+          </v-card-title>
         <v-card-subtitle class="text-center text-h6 font-weight-medium mb-6 welcome-text">
           Cadastro de Usuário
         </v-card-subtitle>
@@ -42,9 +45,13 @@
                 class="custom-input" />
             </v-col>
             <v-col cols="12" class="text-center">
-              <v-btn color="primary" @click="submit" :disabled="!valid" class="mt-4 animated-button" large>
+              <v-btn color="blue" @click="submit" :disabled="!valid" class="mt-4 animated-button" large>
                 <v-icon left>mdi-content-save</v-icon>
                 Salvar
+              </v-btn>
+              <v-btn color="blue" @click="voltarParaLogin" class="mt-4 animated-button" large>
+                <v-icon left>mdi-arrow-left</v-icon>
+                Voltar
               </v-btn>
             </v-col>
           </v-row>
@@ -56,11 +63,13 @@
 
 <script>
 import UsuarioService from '../../services/UsuarioService.js';
+import Logo from '@/assets/sos.png';
 
 export default {
   name: "UsuarioForm",
   data() {
     return {
+      logo: Logo,
       maxDataNascimento: new Date().toISOString().substr(0, 10),
       valid: false,
       menuDataNascimento: false,
@@ -100,7 +109,9 @@ export default {
 
 
   methods: {
-
+voltarParaLogin() {
+    this.$router.push('/login');
+  },
     onDataNascimentoChange(value) {
       this.usuario.dataNascimento = value;
       this.menuDataNascimento = false;
@@ -120,14 +131,13 @@ export default {
     async submit() {
       // Força validação do form e dos campos
       const formValido = this.$refs.form.validate();
-
-      // Valida também a confirmação da senha manualmente (pois é regra personalizada)
       const senhaConfirmaValida = this.validarConfirmarSenha(this.confirmarSenha) === true;
 
       if (formValido && senhaConfirmaValida) {
         try {
           const usuarioCriado = await UsuarioService.criarUsuario(this.usuario);
           alert(`Usuário criado com sucesso! ID: ${usuarioCriado.id}`);
+          this.$router.push({ name: "LoginForm" });
           this.resetForm();
         } catch (error) {
           alert("Erro ao salvar usuário. Veja o console para detalhes.");
@@ -201,11 +211,11 @@ export default {
   background-color: #1976d2;
   font-weight: bold;
   transition: all 0.3s ease;
-  color: white !important;
+  color: rgb(11, 56, 0) !important;
 }
 
 .animated-button:hover {
-  background-color: #125ea3;
+  background-color: #048500;
   transform: scale(1.02);
 }
 
