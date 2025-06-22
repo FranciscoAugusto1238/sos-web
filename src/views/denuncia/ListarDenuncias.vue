@@ -20,7 +20,7 @@
 
 <script>
 import DenunciaService from '@/services/DenunciaService';
-
+import { exibirMensagemErro } from '@/util/MessageUtils.js';
 export default {
     name: 'ListarDenuncias',
     data() {
@@ -35,7 +35,8 @@ export default {
         async carregarDenuncias() {
             const usuarioStr = localStorage.getItem('usuarioLogado');
             if (!usuarioStr) {
-                alert('Usuário não logado');
+                exibirMensagemErro('Você precisa estar logado para acessar esta página.');
+                this.$router.push('/login');
                 return;
             }
 
@@ -46,7 +47,7 @@ export default {
                 this.denuncias = response.data;
             } catch (error) {
                 console.error(error);
-                alert('Erro ao carregar denúncias');
+                exibirMensagemErro('Erro ao carregar denúncias: ' + (error.response?.data?.message || error.message));
             }
         },
 

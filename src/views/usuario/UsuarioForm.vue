@@ -64,6 +64,7 @@
 <script>
 import UsuarioService from '../../services/UsuarioService.js';
 import Logo from '@/assets/sos.png';
+import {exibirMensagemSucesso, exibirMensagemErro, exibirMensagemInfo} from "@/util/MessageUtils.js";
 
 export default {
   name: "UsuarioForm",
@@ -136,18 +137,18 @@ voltarParaLogin() {
       if (formValido && senhaConfirmaValida) {
         try {
           const usuarioCriado = await UsuarioService.criarUsuario(this.usuario);
-          alert(`Usuário criado com sucesso! ID: ${usuarioCriado.id}`);
+          exibirMensagemSucesso("Usuário cadastrado com sucesso!" + usuarioCriado.nome);
           this.$router.push({ name: "LoginForm" });
           this.resetForm();
         } catch (error) {
-          alert("Erro ao salvar usuário. Veja o console para detalhes.");
+          exibirMensagemErro("Erro ao salvar usuário");
           console.error(error);
         }
       } else {
         if (!senhaConfirmaValida) {
-          alert("As senhas não coincidem.");
+          exibirMensagemInfo("As senhas não coincidem.");
         } else {
-          alert("Por favor, preencha todos os campos corretamente.");
+          exibirMensagemInfo("Por favor, preencha todos os campos corretamente.");
         }
       }
     },

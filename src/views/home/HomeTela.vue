@@ -100,7 +100,6 @@ export default {
     const usuarioStr = localStorage.getItem("usuarioLogado");
     if (usuarioStr) {
       this.usuarioLogado = JSON.parse(usuarioStr);
-      console.log("Usuário logado:", this.usuarioLogado);
     }
   },
   methods: {

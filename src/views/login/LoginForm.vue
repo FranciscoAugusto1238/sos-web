@@ -35,17 +35,31 @@
         </v-form>
       </v-card>
     </v-container>
+    <v-snackbar
+  v-model="snackbar"
+  :color="snackbarColor"
+  timeout="3000"
+  top
+  elevation="4"
+>
+  {{ snackbarMessage }}
+</v-snackbar>
+
   </div>
 </template>
 
 <script>
 import UsuarioService from "../../services/UsuarioService";
 import Logo from '@/assets/sos.png';
+import {exibirMensagemSucesso, exibirMensagemErro} from "@/util/MessageUtils.js";
 
 export default {
   name: "LoginUsuario",
   data() {
     return {
+      snackbar: false,
+    snackbarMessage: '',
+    snackbarColor: '',
       logo: Logo,
       valid: false,
       cpfString: "",
@@ -76,10 +90,10 @@ export default {
           const response = await UsuarioService.login(this.cpfNumerico, this.senha);
           localStorage.setItem("token", response.token);
           localStorage.setItem("usuarioLogado", JSON.stringify(response));
-          alert(`Login realizado com sucesso! Bem-vindo, ${response.nome}`);
+          exibirMensagemSucesso("Login realizado com sucesso! Bem-vindo");
           this.$router.push({ name: "HomeCliente" });
         } catch (error) {
-          alert("CPF ou senha inválidos.");
+          exibirMensagemErro("Erro ao realizar login. Verifique suas credenciais.");
           console.error(error);
         }
       }

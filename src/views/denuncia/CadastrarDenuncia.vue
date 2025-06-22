@@ -58,6 +58,7 @@ import DenunciaService from '@/services/DenunciaService';
 import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import {exibirMensagemSucesso, exibirMensagemErro} from "@/util/MessageUtils.js";
 
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -110,17 +111,17 @@ export default {
           },
           error => {
             console.error(error);
-            alert('Não foi possível obter a localização.');
+            exibirMensagemErro('Erro ao obter localização: ' + error.message);
           }
         );
       } else {
-        alert('Geolocalização não é suportada pelo navegador.');
+        exibirMensagemErro('Geolocalização não é suportada pelo navegador.');
       }
     },
     async enviarDenuncia() {
       const usuarioStr = localStorage.getItem('usuarioLogado');
       if (!usuarioStr) {
-        alert('Usuário não logado');
+        exibirMensagemErro('Usuário não logado. Por favor, faça login para enviar uma denúncia.');
         return;
       }
 
@@ -129,11 +130,11 @@ export default {
 
       try {
         await DenunciaService.salvar(this.denuncia);
-        alert('Denúncia enviada com sucesso!');
+        exibirMensagemSucesso('Denúncia enviada com sucesso!');
         this.$router.push({ name: 'HomeCliente' });
       } catch (err) {
         console.error(err);
-        alert('Erro ao enviar denúncia.');
+        exibirMensagemErro('Erro ao enviar denúncia: ' + (err.response?.data?.message || err.message));
       }
     },
 

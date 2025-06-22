@@ -93,6 +93,8 @@ import L from 'leaflet';
 import jsPDF from 'jspdf';
 import Chart from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import {exibirMensagemSucesso, exibirMensagemErro} from "@/util/MessageUtils.js";
+
 
 Chart.register(ChartDataLabels);
 delete L.Icon.Default.prototype._getIconUrl;
@@ -276,7 +278,7 @@ export default {
                     this.gerenciamentos = response.data;
                 })
                 .catch(() => {
-                    this.$toast.error('Erro ao carregar gerenciamentos');
+                    exibirMensagemErro('Erro ao carregar gerenciamentos');
                 });
         },
         abrirDialog(gerenciamento) {
@@ -311,10 +313,11 @@ export default {
             gerenciamentoService.atualizar(this.gerenciamentoSelecionado.id, atualizado)
                 .then(() => {
                     this.carregarGerenciamentos();
+                    exibirMensagemSucesso('Gerenciamento atualizado com sucesso');
                     this.fecharDialog();
                 })
                 .catch(() => {
-                    this.$toast.error('Erro ao atualizar status');
+                    exibirMensagemErro('Erro ao atualizar gerenciamento');
                 });
         },
         formatarData(data) {
