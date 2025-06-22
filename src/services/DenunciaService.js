@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8082/denuncias';
+const API_URL = 'https://api-sos-meio-ambiente-production.up.railway.app/denuncias';
 
 export default {
 async listarPorUsuario(usuarioId) {
