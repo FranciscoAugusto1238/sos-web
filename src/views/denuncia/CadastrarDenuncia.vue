@@ -7,31 +7,21 @@
             <v-icon left color="teal">mdi-alert</v-icon>
             Nova Denúncia
           </v-card-title>
-
           <v-form ref="formDenuncia" v-model="formValido">
             <v-textarea label="Descrição da Denúncia" v-model="denuncia.descricao"
               :rules="[v => !!v || 'Campo obrigatório']" outlined auto-grow rows="3" class="mb-4"
               prepend-inner-icon="mdi-text"></v-textarea>
-
-            <v-file-input label="Imagem ou Arquivo (opcional)" v-model="arquivoSelecionado" accept="image/*,.pdf"
-              outlined show-size prepend-icon="mdi-paperclip" @change="converterParaBase64" class="mb-4"></v-file-input>
+            <v-file-input label="Imagem ou Arquivo" v-model="arquivoSelecionado" accept="image/*,.pdf" outlined
+              show-size prepend-icon="mdi-paperclip" @change="converterParaBase64" class="mb-4"></v-file-input>
             <v-combobox label="Bairro" v-model="denuncia.bairro" :items="bairros"
               :rules="[v => !!v || 'Campo obrigatório']" outlined dense class="mb-4" prepend-inner-icon="mdi-city" />
-
             <v-btn color="primary" block class="mb-2" @click="obterLocalizacao" prepend-icon="mdi-crosshairs-gps">
               Obter Localização Atual
             </v-btn>
-
             <v-alert v-if="denuncia.geolocalizacao" type="info" class="mb-4" border="left" colored-border elevation="2">
               <v-icon left class="mr-2">mdi-map-marker</v-icon>
               Localização obtida: {{ denuncia.geolocalizacao }}
             </v-alert>
-
-            <v-alert v-if="denuncia.geolocalizacao" type="info" class="mb-4" border="left" colored-border elevation="2">
-              <v-icon left class="mr-2">mdi-map-marker</v-icon>
-              Localização obtida: {{ denuncia.geolocalizacao }}
-            </v-alert>
-
             <l-map v-if="latitude !== null && longitude !== null" :zoom="15" :center="[latitude, longitude]"
               style="height: 300px; width: 100%;" class="mb-4">
               <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
@@ -58,7 +48,7 @@ import DenunciaService from '@/services/DenunciaService';
 import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-import {exibirMensagemSucesso, exibirMensagemErro} from "@/util/MessageUtils.js";
+import { exibirMensagemSucesso, exibirMensagemErro } from "@/util/MessageUtils.js";
 
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -86,7 +76,7 @@ export default {
         usuario: {}
       },
       bairros: [
-        'Alvorada', 'Bairro Alvorada', 'Campo Experimental', 'Carboni', 'Centro',
+        'Alvorada', 'Campo Experimental', 'Carboni', 'Centro',
         'Cidade Alta', 'Dois Pinheiros', 'Dois Trevos', 'Farroupilha', 'Floresta',
         'Interior', 'Iomere', 'Marafon', 'Matriz', 'Portal', 'Rio Das Pedras',
         'Rio Pedras', 'Santa Gema', 'Santa Tereza', 'Sao Cristovao', 'Sta Tereza'
@@ -124,7 +114,22 @@ export default {
         exibirMensagemErro('Usuário não logado. Por favor, faça login para enviar uma denúncia.');
         return;
       }
-
+      if (!this.denuncia.descricao || !this.denuncia.descricao.trim()) {
+        exibirMensagemErro('Por favor, preencha a descrição da denúncia.');
+        return;
+      }
+      if (!this.arquivoSelecionado || !this.denuncia.arquivo) {
+        exibirMensagemErro('Por favor, selecione uma imagem ou arquivo para anexar à denúncia.');
+        return;
+      }
+      if (!this.denuncia.geolocalizacao) {
+        exibirMensagemErro('Por favor, obtenha sua localização antes de enviar.');
+        return;
+      }
+      if (!this.denuncia.bairro) {
+        exibirMensagemErro('Por favor, selecione o bairro.');
+        return;
+      }
       const usuario = JSON.parse(usuarioStr);
       this.denuncia.usuario = { id: usuario.id };
 
