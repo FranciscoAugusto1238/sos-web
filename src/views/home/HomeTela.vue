@@ -94,8 +94,19 @@ export default {
       drawer: false,
       usuarioLogado: null,
       logo: Logo,
+      logoutTimer: null,
+      tempoTimeout: 30 * 60 * 1000,
     };
   },
+  beforeDestroy() {
+  window.removeEventListener("mousemove", this.resetarTimerLogout);
+  window.removeEventListener("keydown", this.resetarTimerLogout);
+  window.removeEventListener("scroll", this.resetarTimerLogout);
+  window.removeEventListener("click", this.resetarTimerLogout);
+  window.removeEventListener("touchstart", this.resetarTimerLogout);
+  if (this.logoutTimer) clearTimeout(this.logoutTimer);
+},
+
   created() {
     const usuarioStr = localStorage.getItem("usuarioLogado");
     if (usuarioStr) {
@@ -104,10 +115,30 @@ export default {
   },
   methods: {
     logout() {
+      if (this.logoutTimer) clearTimeout(this.logoutTimer);
       localStorage.removeItem("usuarioLogado");
       localStorage.removeItem("token");
       this.usuarioLogado = null;
       this.$router.push({ name: "LoginForm" });
+    },
+    iniciarMonitoramentoAtividade() {
+      this.resetarTimerLogout();
+      window.addEventListener("mousemove", this.resetarTimerLogout);
+      window.addEventListener("keydown", this.resetarTimerLogout);
+      window.addEventListener("scroll", this.resetarTimerLogout);
+      window.addEventListener("click", this.resetarTimerLogout);
+      window.addEventListener("touchstart", this.resetarTimerLogout);
+    },
+    resetarTimerLogout() {
+      if (!this.usuarioLogado) {
+        if (this.logoutTimer) clearTimeout(this.logoutTimer);
+        return;
+      }
+      if (this.logoutTimer) clearTimeout(this.logoutTimer);
+      this.logoutTimer = setTimeout(() => {
+        alert("Sua sessão expirou por inatividade.");
+        this.logout();
+      }, this.tempoTimeout);
     },
     abrirRedeSocial(rede) {
       const urls = {

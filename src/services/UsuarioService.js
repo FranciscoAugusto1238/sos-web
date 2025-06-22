@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const API_URL = 'https://api-sos-meio-ambiente-production.up.railway.app/usuarios';
+// const API_URL = 'http://localhost:8082/usuarios';
 
 export default {
 

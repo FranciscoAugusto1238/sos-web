@@ -6,9 +6,9 @@
           <img :src="logo" alt="Logo do SOS" class="logo-img"
             style="max-height: 60px; max-width: 60px; margin-bottom: 8px;" />
           <div class="toolbar-logo-title">
-            <span class="text-h5 font-weight-bold white--text">SOS Meio Ambiente</span> 
+            <span class="text-h5 font-weight-bold white--text">SOS Meio Ambiente</span>
           </div>
-          </v-card-title>
+        </v-card-title>
         <v-card-subtitle class="text-center text-h6 font-weight-medium mb-6 welcome-text">
           Cadastro de Usuário
         </v-card-subtitle>
@@ -64,7 +64,7 @@
 <script>
 import UsuarioService from '../../services/UsuarioService.js';
 import Logo from '@/assets/sos.png';
-import {exibirMensagemSucesso, exibirMensagemErro, exibirMensagemInfo} from "@/util/MessageUtils.js";
+import { exibirMensagemSucesso, exibirMensagemErro, exibirMensagemInfo } from "@/util/MessageUtils.js";
 
 export default {
   name: "UsuarioForm",
@@ -91,8 +91,11 @@ export default {
           "CPF deve estar no formato 000.000.000-00",
         uf: value =>
           /^[A-Za-z]{2}$/.test(value) || "UF deve conter 2 letras",
-        minSenha: value =>
-          (value && value.length >= 6) || "A senha deve ter pelo menos 6 caracteres",
+        minSenha: value => {
+          const senhaValida = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[\W_]).{8,}$/.test(value);
+          return senhaValida || "A senha deve ter no mínimo 8 caracteres, incluindo letras, números e ao menos um caractere especial";
+        }
+
       },
     };
   },
@@ -110,9 +113,9 @@ export default {
 
 
   methods: {
-voltarParaLogin() {
-    this.$router.push('/login');
-  },
+    voltarParaLogin() {
+      this.$router.push('/login');
+    },
     onDataNascimentoChange(value) {
       this.usuario.dataNascimento = value;
       this.menuDataNascimento = false;
