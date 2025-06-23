@@ -28,7 +28,7 @@ O protótipo desenvolvido permite que os usuários "denunciantes" realizem o cad
 
 📚 Documentação da API
 
-A documentação da API está acessível no arquivo "Documentação API, em formato PDF e presente neste repositório.
+A documentação da API está acessível no arquivo "Documentação API", em formato PDF e presente neste repositório.
 
 
 ▶️ Como Rodar o Projeto
