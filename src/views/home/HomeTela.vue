@@ -142,8 +142,8 @@ export default {
     },
     abrirRedeSocial(rede) {
       const urls = {
-        facebook: "https://www.facebook.com/people/Ronaldo-Piscinas-RN/61576370217048/",
-        instagram: "https://www.instagram.com/ronaldopiscinas2025?igsh=cXZ4dWFjaHc0YXJw",
+        facebook: "",
+        instagram: "",
         whatsapp:
           "https://wa.me/37998750927?text=Olá!%20Gostaria%20de%20mais%20informações%20sobre%20os%20serviços%20da%20SOS%20Meio%20Ambiente.",
       };
